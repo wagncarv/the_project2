@@ -9,7 +9,7 @@ defmodule Superlogica.Chat.Chat do
   alias Superlogica.Storage.Storage
 
   @fields ["number", "name", "protocol", "message"]
-  @contact_updates ["available_dates", "area_id", "area_name", "chosen_area"]
+  @contact_updates_reservation ["area_id", "area_name"]
   @message_patterns [~r/%RANDOM_QUESTION%/, ~r/%NAME%/, ~r/%FIRST_OPTION%/, ~r/%SECOND_OPTION%/, ~r/%THIRD_OPTION%/]
 
   def start_link(_ignored) do
@@ -137,8 +137,8 @@ defmodule Superlogica.Chat.Chat do
           Storage.insert({contact["protocol"], contact, Messages.get_stage(101)})
           Logger.info(Messages.get_stage(101)["message"], ansi_color: :yellow)
       true ->
-        Logger.info(Messages.get_stage(103), ansi_color: :yellow)
-        Logger.info(Messages.get_stage(2), ansi_color: :yellow)
+        Logger.info(Messages.get_stage(103)["message"], ansi_color: :yellow)
+        Logger.info(Messages.get_stage(2)["message"], ansi_color: :yellow)
     end
   end
 
@@ -173,7 +173,7 @@ defmodule Superlogica.Chat.Chat do
           Storage.insert({contact["protocol"], contact, Messages.get_stage(101)})
           Logger.info(Messages.get_stage(101)["message"], ansi_color: :yellow)
       true ->
-        Logger.info(Messages.get_stage(103), ansi_color: :yellow)
+        Logger.info(Messages.get_stage(103)["message"], ansi_color: :yellow)
         Storage.insert({contact["protocol"], contact, Messages.get_stage(6)})
         Logger.info(Messages.get_stage(6)["menu"], ansi_color: :yellow)
     end
@@ -212,8 +212,8 @@ defmodule Superlogica.Chat.Chat do
             Storage.insert({contact["protocol"], contact, Messages.get_stage(101)})
           Logger.info(Messages.get_stage(101)["message"], ansi_color: :yellow)
       true ->
-        Logger.info(Messages.get_stage(103), ansi_color: :yellow)
-        Logger.info(Messages.get_stage(104), ansi_color: :yellow)
+        Logger.info(Messages.get_stage(103)["message"], ansi_color: :yellow)
+        Logger.info(Messages.get_stage(104)["message"], ansi_color: :yellow)
     end
   end
 
@@ -239,19 +239,31 @@ defmodule Superlogica.Chat.Chat do
 
   end
 
-  defp listen_and_answer(contact, stage, "16") do
+  # Escolher área comum
+  defp listen_and_answer(contact, _stage, "16") do
     Logger.info("#{__MODULE__}.listen_and_answer/3, stage <<16>>", ansi_color: :blue)
-    IO.inspect(contact, label: "16")
-      cond do
-        is_valid_option(contact["message"]) == false ->
-          Logger.info(Messages.get_stage(103), ansi_color: :yellow)
 
-        is_option_in_bounds(contact, String.trim(contact["message"])) == false ->
-            Logger.info(Messages.get_stage(104), ansi_color: :yellow)
+    choice = contact["message"]
+    |> String.trim()
+    |> area_by_option(contact)
 
-        true ->
-          Storage.insert({contact["protocol"],contact, Messages.get_stage(19)})
-      end
+    case choice do
+      %{"area_id" => _rea_id} ->
+        contact = Map.put(contact, "chosen_area", choice)
+        available_dates = reservations_available_days(contact)
+        contact = Map.put(contact, "available_dates", available_dates)
+
+        Storage.insert({contact["protocol"], contact, Messages.get_stage(19)})
+        Helpers.build_message(
+          Messages.get_stage(40)["message"],
+          [List.first(available_dates), List.last(available_dates)],
+          [~r/%BEGIN_DATE%/, ~r/%END_DATE%/]
+        )
+        |> Logger.info(ansi_color: :yellow)
+
+      nil ->
+        Logger.info(Messages.get_stage(104)["message"], andi_color: :yellow)
+    end
   end
 
   # Ouvidoria
@@ -299,18 +311,40 @@ defmodule Superlogica.Chat.Chat do
           Logger.info(Messages.get_stage(28)["message"], ansi_color: :yellow)
 
       true ->
-        Logger.info(Messages.get_stage(103), ansi_color: :yellow)
+        Logger.info(Messages.get_stage(103)["message"], ansi_color: :yellow)
         Storage.insert({contact["protocol"], contact, Messages.get_stage(6)})
         Logger.info(Messages.get_stage(6)["menu"], ansi_color: :yellow)
     end
   end
 
+  # Validar data de reserva escolhida
   defp listen_and_answer(contact, stage, "19") do
     Logger.info("#{__MODULE__}.listen_and_answer/3, stage <<19>>", ansi_color: :blue)
+    message = contact["message"]
+    |> String.trim()
 
+    cond do
+      message in contact["available_dates"] ->
+        Reservations.do_reservation(
+          contact["condominium_id"],
+          contact["apartment_id"],
+          contact["chosen_area"]["area_id"],
+          ChronoUnit.custom_format(message)
+        )
+        |> reservation_information(contact)
+        |> Logger.info(ansi_color: :yellow)
+
+        Storage.insert({contact["protocol"],contact, Messages.get_stage(105)})
+        Logger.info(Messages.get_stage(105)["message"], ansi_color: :yellow)
+
+      true ->
+        Logger.info(Messages.get_stage(105)["message"], ansi_color: :yellow)
+        Storage.insert({contact["protocol"], contact, Messages.get_stage(105)})
+    end
   end
 
   # VEIO DO 21
+  # DEPRECATED
   defp listen_and_answer(contact, _stage, "20") do
     Logger.info("#{__MODULE__}.listen_and_answer/3, stage <<20>>", ansi_color: :blue)
     IO.inspect("21", label: "VINTE")
@@ -331,6 +365,7 @@ defmodule Superlogica.Chat.Chat do
   end
 
   # VERIFICA 20
+  # DEPRECATED
   defp listen_and_answer(contact, _stage, "21") do
     Logger.info("#{__MODULE__}.listen_and_answer/3, stage <<21>>", ansi_color: :blue)
     IO.inspect("21", label: "VINTEUM")
@@ -355,6 +390,7 @@ defmodule Superlogica.Chat.Chat do
     end
   end
 
+  # DEPRECATED
   defp listen_and_answer(contact, _stage, "22") do
     Logger.info("#{__MODULE__}.listen_and_answer/3, stage <<22>>", ansi_color: :blue)
     IO.inspect("22", label: "VINTEDOIS")
@@ -438,8 +474,8 @@ defmodule Superlogica.Chat.Chat do
     end
   end
 
-  # FAZER RESERVA
-  # //TODO ========================================================================================
+  # FAZER RESERVA DE ÁREA COMUM
+  # DEPRECATED
   defp listen_and_answer(contact, stage, "38") do
     Logger.info("#{__MODULE__}.listen_and_answer/3, stage <<38>>", ansi_color: :blue)
      cond do
@@ -463,6 +499,7 @@ defmodule Superlogica.Chat.Chat do
     end
   end
 
+  # Atendimento finalizado
   defp listen_and_answer(_contact, _stage, "101") do
     Logger.info("#{__MODULE__}.listen_and_answer/3, stage <<101>>", ansi_color: :blue)
     #FUNÇÃO PARA SALVAR RECLAMAÇÃO, SUGESTÃO OU ELOGIO
@@ -505,7 +542,7 @@ defmodule Superlogica.Chat.Chat do
     Logger.info("#{__MODULE__}.listen_and_answer/3, stage <<107>>", ansi_color: :blue)
 
     Storage.insert({contact["protocol"], contact, Messages.get_stage(107)})
-    Messages.get_stage(107)
+    Messages.get_stage(107)["message"]
   end
 
   defp listen_and_answer(_contact, _stage, "201") do
@@ -576,10 +613,10 @@ defmodule Superlogica.Chat.Chat do
   end
 
   defp area_by_option(choice, contact) do
-    %{"area_id" => area_id, "area_name" => area_name} = contact["common_areas"]
+    contact["common_areas"]
     |> Enum.find(fn %{"area_option_number" => option} ->
-      option == String.to_integer(choice) end)
-    {area_id, area_name}
+      option == String.to_integer(choice)
+    end)
   end
 
   defp find_chosen_date(dates, _message) when is_nil(dates), do: 0
@@ -593,8 +630,8 @@ defmodule Superlogica.Chat.Chat do
     end)
   end
 
-  defp update_contact(contact, values_list) do
-    Stream.zip(@contact_updates, values_list)
+  defp update_contact(contact, values_list, keys \\ @contact_updates_reservation) do
+    Stream.zip(keys, values_list)
     |> Enum.reduce(contact, fn {key, value}, contact ->
       Map.put(contact, key, value)
     end)
@@ -602,19 +639,16 @@ defmodule Superlogica.Chat.Chat do
 
   defp reservation_information(reservation, contact) do
     %{"date" => date, "reservation_id" => reservation_id} = reservation
-    "Dados da reserva:\nData: #{ChronoUnit.naive_format(date)}\nÁrea reservada: #{contact["area_name"]}\nNúmero da reserva: #{reservation_id}"
+    "Dados da reserva:\nData: #{ChronoUnit.naive_format(date)}\nÁrea reservada: #{contact["chosen_area"]["area_name"]}\nNúmero da reserva: #{reservation_id}"
   end
 
-  # Verifica se argumento é um número
-  defp is_valid_option(option) do
-    option
-    |> String.trim()
-    |> String.match?(~r/[0-9]{1,}/)
-  end
-
-  # Verificar se opção existe
-  defp is_option_in_bounds(%{"comom_areas" => common_areas}, option) do
-    count_areas = Enum.map(1..Enum.count(common_areas), fn e -> e end)
-    option in count_areas
+  defp reservations_available_days(contact) do
+    min_days = String.to_integer(contact["chosen_area"]["min_availability_days"])
+    max_days = String.to_integer(contact["chosen_area"]["max_availability_days"])
+    ChronoUnit.period_range_dates(Date.utc_today(), min_days, max_days)
+    |> Enum.map(fn date ->
+      Timex.format(date, "{0D}-{0M}-{YYYY}")
+      |> elem(1)
+    end)
   end
 end

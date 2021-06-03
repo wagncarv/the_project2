@@ -380,6 +380,15 @@
             "message": "Dados da reserva"
         },
 
+        "40": {
+            "stage": "40",
+            "name": "reservation_message",
+            "type": ["reservation_message", "reservation"],
+            "needs_answer": true,
+            "has_stored_responses": false,
+            "message": "Escolha uma data entre %BEGIN_DATE% e %END_DATE%"
+        },
+
         "99": {
             "stage": "99",
             "name": "first_contact_debt",

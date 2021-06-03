@@ -35,7 +35,8 @@ defmodule Teste2 do
 
 # Teste2.teste("abc", "14425801008")
 # Teste2.teste("abc", "")
-
+# Timex.format(date, "{0D}-{0M}-{YYYY}")
+# {:ok, "2016-02-29"}
   def teste(protocol, msg) do
 
     %{

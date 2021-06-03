@@ -55,6 +55,13 @@ defmodule Superlogica.Helpers.ChronoUnit do
     |> Timex.format!(pattern)
   end
 
+  def custom_format(date, splitter \\ "-") do
+    [month, day, year] = date
+    |> String.trim()
+    |> String.split(splitter)
+    "#{day}/#{month}/#{year}"
+  end
+
   # formatação sem validação de data
   # formata de mm/dd/yyy para dd/mm/yyyy
   def naive_format(date) do
