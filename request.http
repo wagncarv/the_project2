@@ -1,0 +1,44 @@
+# GET https://example.com/topics/1 HTTP/1.1
+
+###
+
+# POST http://69.69.69.112:4000/api/receive
+# content-type: application/json
+
+# {
+#     "event": "boleto_criado",
+#     "number": "5527998568286"
+# }
+
+# POST https://api.demo.hubsoft.com.br/oauth/token
+# content-type: application/json
+
+# {
+# "grant_type": "password",
+#   "client_id": "10",
+#   "client_secret": "Q5CutpzOEZmadmCpW6NaDzq7pMEJavVPcpg5Tl8S",
+#   "username": "desenvolvimento@alertrack.com.br",
+#   "password": "@#!$Alertrack123"
+#}
+
+##################################
+
+# POST https://api.sac.digital/v2/client/notification/direct
+# content-type: "application/json"
+# authorization: "Bearer FUbxbqdXBL7NzrMKk1G_l9JLbydWJKGZaEQCCLK08G6EQN-W3H4Ssm0ba1Z0a_s0v9QCupDTxaXVaqgciBaFGVHPItjUH7R9Ww5wd7QvOAqkm0En2DtdEhAswvRafMc--g-BfKrxcLZYajkb56_uliejayCZObloAM0_RfZbsYne3AfAzTLHhHx9KpBbo9uHeHUsbNt_qy9Jjz5S6ND5XNeLYuvtAzCkyzpF4QhbtxUI8SOPGNw-n7lMmQd1tV9zJ_HlLsfXr-XvvvhcSrEYUoqBq4IYpebQIDRfyvVIqCkbvCaOdo8YiORRzPWMlPQ47pF4GVf5vZjnatkQTyXAOYpH0B4qKovaRedLFc8io8b2SkRp5swaquK8_lYY4D7XvfydL7Khzlv3_vks1SfU7NTnzHls0Y3-BM9t1x-ONH3fXvcxRGoDbE318WlaT9vZb5PKCppVQnMhTPWfS4TU7g2WgROHK58N2wlqY"
+# {
+#     "number" : "5527998568286",
+#     "name" : "Ed.",
+#     "type" : "file",
+#     "url": "https://alertrackdevelo.superlogica.net/clients/areadocondomino/publico/cobranca/c/4-675d331c19ac2a1c6b1382c58e746b613045b33e-2"
+# }
+
+##################################
+
+POST http://localhost:4000/api/chat
+content-type: application/json
+
+{
+    "event": "boleto_criado",
+    "number": "5527998568286"
+}

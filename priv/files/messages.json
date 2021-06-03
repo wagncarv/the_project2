@@ -1,0 +1,472 @@
+{
+    "stages": {
+
+        "1": {
+            "stage": "1",
+            "name": "first_contact",
+            "type": "identified",
+            "debts": false,
+            "needs_answer": true,
+            "has_stored_responses": false,
+            "message": "Bom dia %NAME% 🤗, me confirme algumas informações...\n%RANDOM_QUESTION%? 🤔\n1- %FIRST_OPTION%\n2- %SECOND_OPTION%\n3- %THIRD_OPTION%",
+            "expected_responses": []
+        },
+
+        "2": {
+            "stage": "2",
+            "name": "redirect?",
+            "type": "redirect",
+            "debts": false,
+            "needs_answer": true,
+            "has_stored_responses": false,
+            "message": "O que gostaria de fazer agora?\nDigite 1- *falar com um atendente*\n *- *finalizar*",
+            "positive_responses": ["atend", "1"],
+            "negative_responses": ["finaliza", "encerra", "termina", "*"]
+        },
+       
+        "3": {
+            "stage": "3",
+            "name": "first_contact_debt",
+            "type": ["identified", "debts"],
+            "debts": true,
+            "needs_answer": true,
+            "message": "Vi que %existe(m) pendência(s) na(s) sua(s) taxa(s)% de condomínio desde o dia %DAY_MONTH%, no valor de R$%VALUE% referente ao mês de %MONTH_YEAR%. Vou te encaminhar para um dos nossos atendentes para que ele possa te ajudar.",
+            "expected_responses": []  
+        },
+
+        "4": {
+            "stage": "4",
+            "name": "not_identified",
+            "type": "not_identified",
+            "needs_answer": true,
+            "has_stored_responses": false,
+            "message": "😥 Ops, ocorreu um problema na sua identificação.\nVou te encaminhar para um dos nossos atendentes para que ele possa te ajudar. Por favor aguarde um pouco. 😉",
+            "expected_responses": []
+        },
+
+        "5": {
+            "stage": "5",
+            "name": "confirm_identification",
+            "type": "confirmation",
+            "needs_answer": true,
+            "has_stored_responses": false,
+            "message": "%NAME%, preciso que confirme seus dados, por favor, qual o %RANDOM_QUESTION%? 🧐",
+            "expected_responses": []
+        },
+
+        "6": {
+            "stage": "6",
+            "name": "main_menu",
+            "type": "menu",
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "menu": "Qual das opções gostaria? 🤔\n1️⃣  Financeiro\n2️⃣  Ouvidoria\n3️⃣  Reservas\n4️⃣  Informações\n*️⃣  Finalizar atendimento",
+            "financial_responses": ["1", "Financeiro"],
+            "ombudsman_responses": ["2", "Ouvidoria", "ouvidoria"],
+            "reservation_responses": ["3", "Reservas"],
+            "finish_responses": ["*", "Finaliza","atendimento"],
+            "info_responses": ["info", "4", "informações", "informacao","informa"]
+
+        },
+
+        "7": {
+            "stage": "7",
+            "name": "confirm_identification_id",
+            "type": "identification",
+            "needs_answer": true,
+            "has_stored_responses": false,
+            "message": "Bom dia %NOME% 🤗, para que possa prosseguir, por favor, me informe %RANDOM_QUESTION%?",
+            "expected_responses": []
+        },
+
+        "8": {
+            "stage": "8",
+            "name": "confirm_identification_random",
+            "type": "confirmation",
+            "needs_answer": true,
+            "has_stored_responses": false,
+            "message": "%NOME%, preciso que confirme seus dados, por favor, qual %RANDOM_QUESTION%? 🧐",
+            "expected_responses": []
+        },
+        "9": {
+            "stage": "9",
+            "name": "identification_refused",
+            "type": "confirmation",
+            "needs_answer": false,
+            "has_stored_responses": false,
+            "message": "😥 Ops, não consegui localizar seu cadastro.\nPor favor, entre em contato com o síndico. 😉",
+            "expected_responses": []
+        },
+        "10": {
+            "stage": "10",
+            "name": "main_menu_2",
+            "type": "menu",
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "menu": "Quais dos atendimentos gostaria, %NOME% ? ☺️\n 1️⃣  Financeiro\n 2️⃣  Ouvidoria\n 3️⃣  Reservas\n *️⃣  Finalizar atendimento",
+            "expected_responses": ["1", "2", "3", "*", "Financeiro", "Ouvidoria", "Reservas", "Finalizar atendimento"]
+        },
+        "11": {
+            "stage": "11",
+            "name": "finance",
+            "type": ["finance", "menu"],
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "menu": "Você quer 🧐...\n 1️⃣  Receber boleto\n2️⃣  Confirmar pagamento\n3️⃣  Falar com atendente\n#️⃣  Voltar\n*️⃣  Finalizar",
+            "invoice_responses": ["1", "recebe", "boleto", "fatura", "conta", "condominio"],
+            "confirm_responses": ["2", "confirma", "pagamento"],
+            "return_responses": ["3", "#", "volta"],
+            "talk_responses": ["4", "atende", "atendimento", "fala"],
+            "finish_responses": ["*", "5", "finaliza", "sai", "fecha", "encerra"]
+        },
+        "12": {
+            "stage": "12",
+            "name": "finance_send_bill",
+            "type": ["finance", "send_bill"],
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "message": "Ok. Vou te encaminhar o boleto com vencimento para dia %10/04% com valor de %R$ 200,00%:",
+            "redirect": "Caso queira continuar com seu atendimento,\ndigite  #️⃣  para voltar ao menu financeiro ou  *️⃣ para sair.",
+            "expected_responses": ["#", "*", "voltar", "sair"]
+        },
+        "13": {
+            "stage": "13",
+            "name": "finance_confirm_payment",
+            "type": ["finance", "confirm_payment"],
+            "needs_answer": false,
+            "has_stored_responses": false,
+            "message": "Vou te encaminhar para um dos nossos atendentes para que ele possa te ajudar. Por favor aguarde um pouco. 😉",
+            "expected_responses": []
+        },
+        "14": {
+            "stage": "14",
+            "name": "finance_help_desk",
+            "type": ["finance", "help_desk"],
+            "needs_answer": false,
+            "has_stored_responses": false,
+            "message": "Vou te encaminhar para um dos nossos atendentes para que ele possa te ajudar. Por favor aguarde um pouco. 😉",
+            "expected_responses": []
+        },
+        "15": {
+            "stage": "15",
+            "name": "return_or_quit",
+            "type": "return",
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "message": "O que gostaria de fazer agora? # para voltar ou * para sair",
+            "return_responses": ["#", "volta", "retorna", "menu"],
+            "finish_responses": ["*", "sai", "fecha", "finaliza", "encerra", "tchau", "ciao"]
+        },
+        "16": {
+            "stage": "16",
+            "name": "question",
+            "type": "menu_question",
+            "needs_answer": true,
+            "has_stored_responses": false,
+            "message": "Qual área gostaria de reservar?\nDigite o número da opção desejada",
+            "expected_responses": []
+        },
+        "17": {
+            "stage": "17",
+            "name": "ombudsman",
+            "type": "ombudsman",
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "message": "Este é um espaço aberto para suas reclamações, denúncias e sugestões, digite sua mensagem abaixo...\nApós finalizar sua mensagem digite #️⃣  para voltar",
+            "symbol": "#",
+            "expected_responses": ["#", "voltar"]
+        },
+     
+        "18": {
+            "stage": "18",
+            "name": "reservation",
+            "type": "reservations",
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "message": "Você gostaria de fazer uma [1] Reserva ou [2] Cancelamento? 🤔",
+            "positive_responses": ["1", "eserva"],
+            "negative_responses": ["ancela", "2"]
+        },
+
+        "19": {
+            "stage": "19",
+            "name": "",
+            "type": "",
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "message": "",
+            "expected_responses": []
+        },
+        "20": {
+            "stage": "20",
+            "name": "options_reservation",
+            "type": "menu",
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "message": "Qual área gostaria de reservar?\nDigite o número da opção desejada"
+
+        },
+        "21": {
+            "stage": "21",
+            "name": "options_reservation_month",
+            "type": "menu",
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "menu": "Deste mês em diante, qual mês gostaria de reservar?"
+        } ,
+        "22": {
+            "stage": "22",
+            "needs_answer": true,
+            "has_stored_responses": false,
+            "message": "Digite o número da opção que deseja reservar"
+        },
+
+        "23": {
+            "stage": "23",
+            "name": "reservation_info",
+            "type": "information",
+            "needs_answer": false,
+            "has_stored_responses": false,
+            "message": "Dados da reserva\nData da reserva:\n%11/05/2021%\nÁrea reservada:\n%Salão de festas%\n Preço: %R$ 35,00%\nInformação: %Deixar o ambiente limpo após o uso.%",
+            "expected_responses": []
+        },
+        "24": {
+            "stage": "24",
+            "name": "reservation_confirm",
+            "type": "menu",
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "message": "Por último... posso confirmar a sua reserva? 🥳",
+            "expected_responses": ["sim", "s", "ok", "claro", "positivo", "obviamente", "beleza"]
+        },
+        "25": {
+            "stage": "25",
+            "name": "reservation_confirmation_message",
+            "type": ["menu", "confirmation"],
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "message": "Reserva confirmada! 😉\nDigite  #️⃣  para voltar ou  *️⃣  para sair",
+            "expected_responses": ["#", "*", "voltar", "sair"]
+        },
+        "26": {
+            "stage": "26",
+            "name": "message",
+            "type": ["confirmation"],
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "message": "Não há faturas em aberto"
+        },
+
+        "27": {
+            "stage": "27",
+            "name": "question",
+            "type": ["cancel"],
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "message": "Digite o número da opção que gostaria de cancelar"
+        },
+
+        "28": {
+            "stage": "28",
+            "name": "",
+            "type": [""],
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "message": "Ou digite $ para cancelar todas, # para voltar e * para sair",
+            "cancel_responses": ["$", "toda"],
+            "return_responses": ["#", "volta", "retorna", "menu"],
+            "finish_responses": ["*", "sai", "fecha", "finaliza", "encerra", "tchau", "ciao"]
+        },
+
+        "29": {
+            "stage": "29",
+            "name": "",
+            "type": [""],
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "message": "Você digitou uma opção inválida.\nDigite um número entre 1 e %OPTION%."
+        },
+
+        "30": {
+            "stage": "30",
+            "name": "cancel_reservation",
+            "type": ["cancel", "reservation"],
+            "needs_answer": false,
+            "has_stored_responses": false,
+            "message": "Cancelamento efetuado com sucesso!"
+        },
+
+        "31": {
+            "stage": "31",
+            "name": "",
+            "type": [""],
+            "needs_answer": true,
+            "has_stored_responses": false,
+            "message": "Você digitou uma opção inválida. Digite um mês entre o atual e dezembro"
+        },
+
+        "32": {
+            "stage": "32",
+            "name": "",
+            "type": [""],
+            "needs_answer": false,
+            "has_stored_responses": false,
+            "message": "Área indisponível neste período. Tente reservar para outro mês"
+        },
+
+        "33": {
+            "stage": "33",
+            "name": "",
+            "type": [""],
+            "needs_answer": true,
+            "has_stored_responses": false,
+            "message": "Selecione uma data diferente desta"
+        },
+
+        "34": {
+            "stage": "34",
+            "name": "",
+            "type": [""],
+            "needs_answer": true,
+            "has_stored_responses": false,
+            "message": "Selecione o dia da reserva\n"
+        },
+
+        "35": {
+            "stage": "35",
+            "name": "",
+            "type": [""],
+            "needs_answer": true,
+            "has_stored_responses": false,
+            "message": "Informações",
+            "return_responses": ["#", "1", "volta"],
+            "finish_responses": ["2","finaliza", "encerra", "termina", "fecha", "*"]
+        },
+
+        "36": {
+            "stage": "36",
+            "name": "not_identified",
+            "type": "not_identified",
+            "needs_answer": true,
+            "has_stored_responses": false,
+            "message": "😥 Ops, ocorreu um problema na sua identificação.\nPor favor, entre em contato com o condomínio😉"
+        },
+
+        "37": {
+            "stage": "37",
+            "name": "chosen_area_message",
+            "type": ["info_message", "reservation"],
+            "needs_answer": true,
+            "has_stored_responses": false,
+            "message": "Você escolheu: opção %OPTION%\nDia: %DAY%.\nConfirma? [sim/não]"
+        },
+
+        "38": {
+            "stage": "38",
+            "name": "confirm_area",
+            "type": ["confirmation_message", "reservation"],
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "confirmation_responses": ["y", "yes", "sim", "certo", "confirmo", "ok", "1", "confirma", "claro"],
+            "decline_responses": ["n", "não", "no", "naum", "non", "ñ", "not", "cancela", "2", "desisto", "rejeit"],
+            "message": "Reserva confirmada"
+        },
+        "39": {
+            "stage": "39",
+            "name": "confirm_reservation_message",
+            "type": ["reservation_message", "reservation"],
+            "needs_answer": true,
+            "has_stored_responses": true,
+            "message": "Dados da reserva"
+        },
+
+        "99": {
+            "stage": "99",
+            "name": "first_contact_debt",
+            "type": ["identified", "debts"],
+            "debts": true,
+            "needs_answer": false,
+            "message": "%NAME%, vou te encaminhar para o atendimento. Por favor, aguarde.",
+            "expected_responses": []  
+        },
+        
+        "101": {
+            "stage": "101",
+            "name": "forward",
+            "type": ["identified", "forward"],
+            "debts": true,
+            "needs_answer": true,
+            "message": "Atendimento finalizado.",
+            "expected_responses": []  
+        },
+        "102": {
+            "stage": "102",
+            "name": "first_contact",
+            "type": "identified",
+            "debts": false,
+            "needs_answer": true,
+            "has_stored_responses": false,
+            "message": "Bom dia %NOME% 🤗, me confirme algumas informações...\n%RANDOM_QUESTION%? 🤔",
+            "expected_responses": []
+        },
+        "103": {
+            "stage": "103",
+            "name": "main_menu_evasive",
+            "type": ["menu"],
+            "debts": true,
+            "needs_answer": true,
+            "message": "Não entendi o que você falou.",
+            "expected_responses": []  
+        },
+        "104": {
+            "stage": "104",
+            "name": "main_menu_evasive_second",
+            "type": ["menu"],
+            "debts": true,
+            "needs_answer": true,
+            "message": "Digite uma das opções do menu acima",
+            "expected_responses": []  
+        },
+
+        "105": {
+            "stage": "105",
+            "name": "quit_or_return",
+            "type": "redirect",
+            "debts": false,
+            "needs_answer": true,
+            "has_stored_responses": false,
+            "message": "O que gostaria de fazer agora?\nDigite # para voltar ao menu ou * para *finalizar*",
+            "positive_responses": ["#", "1", "volta", "v", "comeco", "menu"],
+            "negative_responses": ["2", "fim","finaliza", "encerra", "termina", "fecha", "*"]
+        },
+        "106": {
+            "stage": "106",
+            "name": "send_ombudsman",
+            "type": ["menu"],
+            "debts": false,
+            "needs_answer": true,
+            "message": "Sua mensagem foi encaminhada com sucesso.",
+            "expected_responses": []  
+        },
+
+        "107": {
+            "stage": "107",
+            "name": "cancel_reservation",
+            "type": ["cancel"],
+            "debts": true,
+            "needs_answer": false,
+            "message": "Por favor, infome o número da reserva."
+        },
+
+        "201": {
+            "stage": "201",
+            "name": "em atendimento",
+            "type": ["menu"],
+            "debts": true,
+            "needs_answer": true,
+            "message": "Você já foi encaminhado para atendimento. Por favor aguarde.",
+            "expected_responses": []  
+        }
+     
+    }
+} 

@@ -1,0 +1,25 @@
+{   
+    "email_options": [
+        "@gmail.com", "@gmail.com.br", "@seg.es.gov.br", "@yahoo.com", "@outlook.com", "@hotmail.com",
+        "@gmax.com", "@zohomail.com", "@fastmail.com", "@tutanota.com", "@icloud.com",
+        "@elude.com", "@uol.com", "@aol.com", "@protonmail.com", "@bol.com.br", "@live.com"
+    ],
+    "names": [
+        "Silva", "Santos", "Oliveira", "Costa", "Souza", "Lima", "Pereira", "Rodrigues",
+        "Almeida", "Tavares", "Guilherme", "Ferraz", "Nascimento", "Ceni", "Klein", "Schneider", "Alves",
+        "Miranda", "Alcantara", "Xavier", "Marques", "araujo", "ribeiro", "moura", "porto", "salgado",
+        "milano", "rossi", "fontana", "meireles", "valente", "bianchi", "romano", "bellini", "amorim", "gonzaga",
+        "paganotto", "santoro", "pellegrini", "silvestri", "silvestre", "canto", "mazza", "neri", "ferrara",
+        "fabiani", "faiol", "colombo", "pimentel", "coppola", "conti", "franco", "caruso", "lupo", "moretti",
+        "leto", "piazza", "camarda", "azeredo", "serafim", "rabelo", "jung", "vaz", "schmidt", "becker", "ritter", "stein",
+        "braun", "hoff", "scherer", "weber", "jager", "penha", "muller", "saviano", "penedo", "ludwig", "castro", "coutinho",
+        "albuquerque", "mesa", "alto", "pita", "camargo", "chiesa", "montanha", "filho", "betting", "albano", "kiehl",
+        "schiller", "pequeno", "maior", "aveiro", "peixe", "fantino", "trentino", "alves", "carvalho", "leite", "sales", "alvares",
+        "sabino", "soares", "castelo", "forte", "cabral"
+    ],
+    "random_values_messages": [
+        {"cpf": "Qual é o seu cpf"},
+        {"email": "Qual é o seu email cadastrado"},
+        {"last_three": "os três últimos números do seu cpf"}
+    ]
+}

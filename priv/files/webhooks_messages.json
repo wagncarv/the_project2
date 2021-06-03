@@ -1,0 +1,21 @@
+{
+    "bill_created": {
+        "type": "new_bill",
+        "message": "%SAUDACAO% *%NAME%*\nHá um novo boleto gerado no valor de *%VALUE%* com vencimento para *%EXPIRE%*"
+    },
+
+    "bill_changed": {
+        "type": "modified_bill",
+        "message": "%SAUDACAO% *%NAME%*\nSeu boleto foi alterado para o valor de *%VALUE%* com vencimento para *%EXPIRE%*"
+    },
+    "bill_deleted": {
+        "type": "reversed_bill",
+        "message": "%SAUDACAO% %NAME%\nEstorno de boleto no valor de *%VALUE%*"
+    }
+} 
+    
+
+         
+
+
+

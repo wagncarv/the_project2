@@ -1,0 +1,549 @@
+--------- CORREÇÕES ---------
+1 corrigir ombudsman . Ao digitar # tem que voltar para menu
+2 - corrigir todas as letras de resposta, passar para lower case ao receber mensagem
+3 - Formatar mensagem de envio pelo whatsapp, caso tenha débitos => check_expenses(contact) #//TODO
+
+============================================
+
+Fluxo reservas:
+1 - Escolha o mês:
+-> 1 2 3 4 5 6 7 8 9 10 11
+
+2 - Escolha a área
+-> Salão de festas manhã; 
+   Salão de festas tarde; 
+   churrasqueira manhã; 
+   churrasqueira tarde;
+
+3 - envio mensagem de confirmação
+
+4 - menu para sair ou voltar
+
+
+================
+6 - ecolheu área
+ - insiro chave = 11
+7 = reservar = 11
+
+
+contact: %{
+  "apartment_block" => "1",
+  "apartment_id" => "1",
+  "apartment_number" => "1001",
+  "condominium_id" => "2",
+  "cpf" => "14425801008",
+  "email" => "santosrom@mail.com",
+  "key" => "cpf",
+  "message" => "14425801008",
+  "name" => "Romulo Santos",
+  "number" => "552754565432",
+  "phone" => "552754565432",
+  "protocol" => "abc",
+  "resident" => "Residente",
+  "rg" => ""
+}
+
+  %{
+    "apartament" => "1001",
+    "apartament_id" => "1",
+    "area_id" => "12",
+    "area_name" => "Salão de Festas - Tarde",
+    "block" => "1",
+    "condominium_id" => "2",
+    "date" => "05/26/2021 00:00:00",
+    "price" => "35.00",
+    "reservation_id" => "14",
+    "status" => "1"
+  }
+
+==================================
+ ///{"apartament_id" => apartment_id, "area_id" => area_id, "area_name" => area_name, "reservation_id" => reservation_id}
+==================================
+  # ============================================================================================================================================
+STAGE 28
+
+
+21: %{
+  "apartment_block" => "1",
+  "apartment_id" => "1",
+  "apartment_number" => "1001",
+  "condominium_id" => "2",
+  "cpf" => "14425801008",
+  "email" => "santosrom@mail.com",
+  "key" => "cpf",
+  "message" => "1",
+  "name" => "Romulo Santos",
+  "number" => "552754565432",
+  "phone" => "552754565432",
+  "protocol" => "abc",
+  "reservation_info" => [
+    %{
+      "apartment_id" => "1",
+      "area_id" => "11",
+      "area_name" => "Salão de Festas - Manhã",
+      "option" => 1,
+      "reservation_id" => "11"
+    },
+    %{
+      "apartment_id" => "1",
+      "area_id" => "11",
+      "area_name" => "Salão de Festas - Manhã",
+      "option" => 2,
+      "reservation_id" => "4"
+    },
+    %{
+      "apartment_id" => "1",
+      "area_id" => "12",
+      "area_name" => "Salão de Festas - Tarde",
+      "option" => 3,
+      "reservation_id" => "14"
+    }
+  ],
+  "resident" => "Residente",
+  "rg" => ""
+}
+===========================================
+LINHA 263
+reservation_info(apartment_id, condominium_id, status \\ 1)
+TODOS VOLTA4
+
+%{
+  "apartment_block" => "1",
+  "apartment_id" => "1",
+  "apartment_number" => "1001",
+  "common_areas" => [
+    %{
+      "id_area_are" => "11",
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Salão de Festas - Manhã",
+      "vl_valor_rec" => "35.00"
+    },
+    %{
+      "id_area_are" => "12",
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Salão de Festas - Tarde",
+      "vl_valor_rec" => "35.00"
+    },
+    %{
+      "id_area_are" => "13",
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Salão de Festas - Noite",
+      "vl_valor_rec" => "35.00"
+    },
+    %{
+      "id_area_are" => "14",
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Churrasqueira - Manhã",
+      "vl_valor_rec" => "35.00"
+    },
+    %{
+      "id_area_are" => "15",
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Churrasqueira - Tarde",
+      "vl_valor_rec" => "35.00"
+    },
+    %{
+      "id_area_are" => "16", 
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Churrasqueira - Noite",
+      "vl_valor_rec" => "35.00"
+    }
+  ],
+  "condominium_id" => "2",
+  "cpf" => "14425801008",
+  "email" => "santosrom@mail.com",
+  "key" => "cpf",
+  "message" => "maio",
+  "month_number" => ["5", "maio"],
+  "name" => "Romulo Santos",
+  "number" => "552754565432",
+  "phone" => "552754565432",
+  "protocol" => "abc",
+  "resident" => "Residente",
+  "rg" => ""
+}
+
+============================================================================================================================================================
+28/05/2021
+reservas
+X A - RESOLVER PROBLEMA VALIDAR USUÁRIO. USUÁRIO ESTA INDO PARA MENU PRINCIPAL SEM ACERTAR PERGUNTA -> ESTÁ 'OK'
+X B - TRATAMENTOS -> NENHUM DIA RESERVADO, TODOS OS DIAS RESERVADOS, MOSTRAR MAIS RESERVAS OU MENOS, A QUE FOR MENOR -> ESTÁ OK
+X C - INSERIR NOVA OPÇÃO NO MENU PRINCIPAL: INFORMAÇÕES. NESTA, SERÃO APRESENTADAS INFORMAÇÕES SOBRE O CONDOMÍNIO, MESMO SE O USUÁRIO NÃO FOR CONDÔMINO. -> OK
+
+31/05/2021
+A - MENU FINANCEIRO, CORRIGIR EXIBIÇÃO DA DATA DE BOLETO [mm/dd/yyyy] para [dd/mm/yyyy]
+X B - APÓS RESERVA, OPÇÃO DE VOLTAR - AJUSTAR DATAS DAS RESERVAS QUANDO O MÊS ESTIVER DISPONÍVEL. APRESENTAR UM PADRÃO DESEJADO -> OK
+X C - RESERVAS, APRESENTAR FORMATO DA DATA, NÃO OS DIAS DISPONÍVEIS -> OK
+
+-> LINHA 345, RESERVAS
+
+
+-> ALTERAR 'if' LINHA 
+
+
+
+CONTACT: %{
+  "apartment_block" => "1",
+  "apartment_id" => "1",
+  "apartment_number" => "1001",
+  "area_id" => "15",
+  "available_dates" => ["01/06/2021", "02/06/2021", "03/06/2021", "04/06/2021",
+   "05/06/2021", "06/06/2021", "07/06/2021", "08/06/2021", "09/06/2021",
+   "10/06/2021", "11/06/2021", "12/06/2021", "13/06/2021", "14/06/2021",
+   "15/06/2021", "16/06/2021", "17/06/2021", "18/06/2021", "19/06/2021",
+   "20/06/2021", "21/06/2021", "22/06/2021", "23/06/2021", "24/06/2021",
+   "25/06/2021", "26/06/2021", "27/06/2021", "28/06/2021", "29/06/2021",
+   "30/06/2021"],
+  "chosen_area" => "5",
+  "common_areas" => [
+    %{
+      "area_option_number" => 1,
+      "id_area_are" => "11",
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Salão de Festas - Manhã",
+      "vl_valor_rec" => "35.00"
+    },
+    %{
+      "area_option_number" => 2,
+      "id_area_are" => "12",
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Salão de Festas - Tarde",
+      "vl_valor_rec" => "35.00"
+    },
+    %{
+      "area_option_number" => 3,
+      "id_area_are" => "13",
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Salão de Festas - Noite",
+      "vl_valor_rec" => "35.00"
+    },
+    %{
+      "area_option_number" => 4,
+      "id_area_are" => "14",
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Churrasqueira - Manhã",
+      "vl_valor_rec" => "35.00"
+    },
+    %{
+      "area_option_number" => 5,
+      "id_area_are" => "15",
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Churrasqueira - Tarde",
+      "vl_valor_rec" => "35.00"
+    },
+    %{
+      "area_option_number" => 6,
+      "id_area_are" => "16",
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Churrasqueira - Noite",
+      "vl_valor_rec" => "35.00"
+    }
+  ],
+  "condominium_id" => "2",
+  "cpf" => "14425801008",
+  "email" => "santosrom@mail.com",
+  "for_validation" => ["008", "santosrom@mail.com"],
+  "key" => "cpf",
+  "message" => "05/06/2021",
+  "month_number" => ["6", "junho"],
+  "name" => "Romulo Santos",
+  "number" => "552754565432",
+  "phone" => "552754565432",
+  "protocol" => "abc",
+  "resident" => "Residente",
+  "rg" => ""
+}
+[label: "FIND CHOSEN"]
+%{
+  "apartament_id" => "1",
+  "area_id" => "15",
+  "condominium_id" => "2",
+  "date" => "06/05/2021 00:00:00",
+  "price" => "35.00",
+  "reservation_id" => "22"
+}
+
+===============================================================================================================================================
+
+FAZER RESERVA: %{
+  "apartment_block" => "1",
+  "apartment_id" => "1",
+  "apartment_number" => "1001",
+  "area_id" => "13",
+  "area_name" => "Salão de Festas - Noite",
+  "available_dates" => ["01/12/2021", "02/12/2021", "03/12/2021", "04/12/2021",
+   "05/12/2021", "06/12/2021", "07/12/2021", "08/12/2021", "09/12/2021",
+   "10/12/2021", "11/12/2021", "12/12/2021", "13/12/2021", "14/12/2021",
+   "15/12/2021", "16/12/2021", "17/12/2021", "18/12/2021", "19/12/2021",
+   "20/12/2021", "21/12/2021", "22/12/2021", "23/12/2021", "24/12/2021",
+   "25/12/2021", "26/12/2021", "27/12/2021", "28/12/2021", "29/12/2021",
+   "30/12/2021", "31/12/2021"],
+  "chosen_area" => "3",
+  "chosen_day" => "19/12/2021",
+  "common_areas" => [
+    %{
+      "area_option_number" => 1,
+      "id_area_are" => "11",
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Salão de Festas - Manhã",
+      "vl_valor_rec" => "35.00"
+    },
+    %{
+      "area_option_number" => 2,
+      "id_area_are" => "12",
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Salão de Festas - Tarde",
+      "vl_valor_rec" => "35.00"
+    },
+    %{
+      "area_option_number" => 3,
+      "id_area_are" => "13",
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Salão de Festas - Noite",
+      "vl_valor_rec" => "35.00"
+    },
+    %{
+      "area_option_number" => 4,
+      "id_area_are" => "14",
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Churrasqueira - Manhã",
+      "vl_valor_rec" => "35.00"
+    },
+    %{
+      "area_option_number" => 5,
+      "id_area_are" => "15",
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Churrasqueira - Tarde",
+      "vl_valor_rec" => "35.00"
+    },
+    %{
+      "area_option_number" => 6,
+      "id_area_are" => "16",
+      "id_condominio_cond" => "2",
+      "st_nome_are" => "Churrasqueira - Noite",
+      "vl_valor_rec" => "35.00"
+    }
+  ],
+  "condominium_id" => "2",
+  "cpf" => "14425801008",
+  "email" => "santosrom@mail.com",
+  "for_validation" => ["008", "santosrom@mail.com"],
+  "key" => "cpf",
+  "message" => "sim",
+  "month_number" => ["12", "dezembro"],
+  "name" => "Romulo Santos",
+  "number" => "552754565432",
+  "phone" => "552754565432",
+  "protocol" => "abc",
+  "resident" => "Residente",
+  "rg" => ""
+}
+
+=================================================================================================
+
+ÁREAS COMUNS
+
+"areas_semelhantes": [
+        {
+          "st_fantasia_cond": "Nome Fantasia do Condomínio",
+          "id_area_are": "121",
+          "st_nome_are": "Churrasqueira - Manhã",
+          "st_regras_are": "- Deixar o ambiente limpo após o uso.",
+          "id_condominio_cond": "1",
+          "fl_status_are": "0",
+          "st_conta_cont": "",
+          "id_planoconta_plc": "",
+          "vl_valor_rec": "0.00",
+          "fl_cobranca_are": "0",
+          "fl_bloquearinad_are": "0",
+          "nm_antecedencia_are": "1",
+          "nm_disponibilizardias_are": "30",
+          "fl_vencimentocobranca_are": "0",
+          "nm_diasvencimentocobranca_are": "",
+          "fl_contaprincipal_are": "0",
+          "id_contabanco_are": "5",
+          "fl_terca_are": "0",
+          "fl_quarta_are": "0",
+          "fl_quinta_are": "0",
+          "fl_sexta_are": "0",
+          "fl_sabado_are": "0",
+          "fl_domingo_are": "0",
+          "fl_segunda_are": "0",
+          "fl_confirma_reserva_are": "0",
+          "fl_confirmareservaauto_are": "0",
+          "fl_dtreservaarrecadacao_are": "0",
+          "reservas": [
+            {
+              "st_unidade_uni": "001",
+              "st_bloco_uni": "A",
+              "st_fantasia_cond": "Nome Fantasia do Condomínio",
+              "st_nome_cond": "Nome do condomínio",
+              "id_reserva_res": "768",
+              "id_area_are": "121",
+              "id_unidade_uni": "64",
+              "id_condominio_cond": "1",
+              "dt_reserva_res": "05/23/2018 00:00:00",
+              "fl_status_res": "-1",
+              "nm_fila_res": "1",
+              "st_motivocancelamento_res": "Inadimplente",
+              "st_emailconfirmacao_res": "emaildeconfirmacao@superlogica.com",
+              "id_recebimento_recb": "",
+              "id_receita_rec": "",
+              "st_reservadopor_res": "sindíco/responsável legal",
+              "st_email_res": "email@superlogica.com",
+              "dt_reservarealizada_res": "05/22/2018 00:00:00",
+              "vl_admvalorreserva_res": "0.00"
+            }
+          ]
+        }
+]
+RESERVAS=======================================
+-> NM_ANTECEDENCIA_ARE = antecedência mínima para reservar.Informe quantos dias de antecedência a reserva poderá ser feita. Os responsáveis legais não se 
+enquadram na regra.
+-> NM_DISPONIBILIZARDIAS_ARE = antecedência mínima para reservar. Informe quantos dias a área estará disponível para a reserva, contando a partir da data atual. 
+Os responsáveis legais não se enquadram na regra.
+-> NM_ANTECEDENCIAMINIMACANCELAMENTO_ARE = Informe quantos dias de antecedência a reserva já confirmada poderá ser cancelada. Os responsáveis legais não se 
+enquadram na regra. (Regra se aplica apenas para reservas sem receita).
+=======================================
+
+
+
+   "before_term" => "1",
+      "dt_emailreservanaopaga_res" => "",
+      "dt_reserva_res" => "08/12/2021 00:00:00",
+      "dt_reservarealizada_res" => "05/31/2021 00:00:00",
+      "fl_status_res" => "1",
+      "id_area_are" => "14",
+      "id_condominio_cond" => "2",
+      "id_recebimento_recb" => "",
+      "id_receita_rec" => "",
+      "id_reserva_res" => "24",
+      "id_unidade_uni" => "1",
+      "nm_fila_res" => "1",
+      "st_bloco_uni" => "1",
+      "st_email_res" => "E-mail não definido",
+      "st_emailconfirmacao_res" => "app_use2",
+      "st_fantasia_cond" => "Monte Cassino",
+      "st_motivocancelamento_res" => "",
+      "st_nome_cond" => "Monte Cassino",
+      "st_reservadopor_res" => "app_use2",
+      "st_unidade_uni" => "1001",
+      "vl_admvalorreserva_res" => "35.00"
+
+
+===============================================================================================================
+02/06/2021, quarta-feira
+fluxo atual: 18 [apresentar meses] -> 21[apresentar áreas] // 6 -> 18 -> 21 -> 22 -> 38
+ALTERAR PARA: 6 -> 21 -> 
+21 [apresentar áreas] 
+-> escolher área 
+-> verificar se está no período hábil de reservar 
+-> mensagem de tratamento 
+-> escolher dia 
+
+0] 6 -> 18
+1] 18 -> 16
+2] 16 -> 19
+
+ATUAL: 16 -> 
+
+OBS.: 
+6 = Menu PRINCIPAL , menu 'Você gostaria de fazer uma [1] Reserva ou [2] Cancelamento'
+102 = VALIDAR USUÁRIO
+18 = APRESENTA MESES A RESERVAR, 'Deste mês em diante, qual mês gostaria de reservar?'
+21 = APRESENTA AS ÁREAS, 'Qual área gostaria de reservar? Digite o número da opção desejada'
+22 = 20 Selecione o dia da reserva
+38 = CONFIRMA RESERVA, OPÇÃO DE VOLTAR OU SAIR
+105 = TRAATA VOLTAR E SAIR
+
+Storage.insert({contact["protocol"], contact, Messages.get_stage(16)}) #//ALTERADO i1
+Logger.info(Messages.get_stage(16)["message"], ansi_color: :yellow) #//ALTERADO i2
+
+
+
+
+
+  ####
+%{
+  "apartment_block" => "1",
+  "apartment_id" => "1",
+  "apartment_number" => "1001",
+  "common_areas" => [
+    %{
+      "area_id" => "11",
+      "area_name" => "Salão de Festas - Manhã",
+      "area_option_number" => 1,
+      "condominium_id" => "2",
+      "max_availability_days" => "30",
+      "min_availability_days" => "0",
+      "price" => "35.00"
+    },
+    %{
+      "area_id" => "12",
+      "area_name" => "Salão de Festas - Tarde",
+      "area_option_number" => 2,
+      "condominium_id" => "2",
+      "max_availability_days" => "30",
+      "min_availability_days" => "0",
+      "price" => "35.00"
+    },
+    %{
+      "area_id" => "13",
+      "area_name" => "Salão de Festas - Noite",
+      "area_option_number" => 3,
+      "condominium_id" => "2",
+      "max_availability_days" => "30",
+      "min_availability_days" => "0",
+      "price" => "35.00"
+    },
+    %{
+      "area_id" => "14",
+      "area_name" => "Churrasqueira - Manhã",
+      "area_option_number" => 4,
+      "condominium_id" => "2",
+      "max_availability_days" => "30",
+      "min_availability_days" => "0",
+      "price" => "35.00"
+    },
+    %{
+      "area_id" => "15",
+      "area_name" => "Churrasqueira - Tarde",
+      "area_option_number" => 5,
+      "condominium_id" => "2",
+      "max_availability_days" => "30",
+      "min_availability_days" => "0",
+      "price" => "35.00"
+    },
+    %{
+      "area_id" => "16",
+      "area_name" => "Churrasqueira - Noite",
+      "area_option_number" => 6,
+      "condominium_id" => "2",
+      "max_availability_days" => "30",
+      "min_availability_days" => "0",
+      "price" => "35.00"
+    }
+  ],
+  "condominium_id" => "2",
+  "cpf" => "14425801008",
+  "email" => "santosrom@mail.com",
+  "for_validation" => ["008", "santosrom@mail.com"],
+  "key" => "cpf",
+  "message" => "1",
+  "name" => "Romulo Santos",
+  "number" => "552754565432",
+  "phone" => "552754565432",
+  "protocol" => "abc",
+  "resident" => "Residente",
+  "rg" => ""
+}
+
+
+
+
+
+ 
+
+
+
+
