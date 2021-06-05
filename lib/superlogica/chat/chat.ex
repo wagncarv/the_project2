@@ -26,8 +26,6 @@ defmodule Superlogica.Chat.Chat do
   # mensagens recebidas do controller
   def call(incoming) do
     Logger.info("#{__MODULE__}.call/1", ansi_color: :blue)
-
-    #//TODO
     Storage.get(incoming["info"]["protocol"])
     |> reply(incoming)
   end
@@ -94,7 +92,6 @@ defmodule Superlogica.Chat.Chat do
   end
 
   # cliente sem dívida
-  #//TODO
   def redirect(false, contact) do
     Logger.info("#{__MODULE__}.redirect/1")
     question = validation_question(contact)
@@ -643,12 +640,21 @@ defmodule Superlogica.Chat.Chat do
   end
 
   defp reservations_available_days(contact) do
+    confirmed_reservations = confirmed_reservations_by_area(contact["condominium_id"], contact["area_id"])
     min_days = String.to_integer(contact["chosen_area"]["min_availability_days"])
     max_days = String.to_integer(contact["chosen_area"]["max_availability_days"])
-    ChronoUnit.period_range_dates(Date.utc_today(), min_days, max_days)
+    available = ChronoUnit.period_range_dates(Date.utc_today(), min_days, max_days)
     |> Enum.map(fn date ->
       Timex.format(date, "{0D}-{0M}-{YYYY}")
       |> elem(1)
     end)
+    available -- confirmed_reservations
+  end
+
+  defp confirmed_reservations_by_area(condominium_id, area_id) do
+     Reservations.reservation_dates(condominium_id, area_id)
+    |> Stream.map(fn e -> DateTime.to_date(e) end)
+    |> Stream.map(fn e -> Timex.format(e, "{0D}-{0M}-{YYYY}") end)
+    |> Enum.map(fn {_, date} -> date end)
   end
 end
